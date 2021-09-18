@@ -4,9 +4,13 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
+const connectDB = require("./config/db");
 
 // defining the Express app
 const app = express();
+
+// connect to database
+connectDB();
 
 // adding Helmet to enhance API security
 app.use(helmet());
