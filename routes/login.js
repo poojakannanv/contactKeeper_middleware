@@ -6,6 +6,8 @@ const config = require("config");
 // used to validate response in the server-side
 const { body, validationResult } = require("express-validator");
 const User = require("../modules/User");
+const auth = require("../middleware/auth");
+
 // * @route   POST api/login
 // * @desc    Auth user and get token
 // * @access  Public
@@ -41,7 +43,7 @@ router.post(
         { expiresIn: 3600 },
         (error, token) => {
           if (error) throw error;
-          res.json({ token, userId: user.id });
+          res.json({ token,});
         }
       );
     } catch (error) {
@@ -53,7 +55,14 @@ router.post(
 // * @route   GET api/login
 // * @desc    Get logged in user
 // * @access  Private
-router.get("/", (req, res) => {
-  res.send("Get logged in user");
+
+router.get("/", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId).select("-password");
+    res.json(user);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("server error");
+  }
 });
 module.exports = router;

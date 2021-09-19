@@ -82,7 +82,7 @@ router.post(
         { expiresIn: 3600 },
         (error, token) => {
           if (error) throw error;
-          res.json({ token, userId: user.id });
+          res.json({ token });
         }
       );
     } catch (error) {
