@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const config = require("config");
 // used to validate response in the server-side
 const { body, validationResult } = require("express-validator");
-const User = require("../modules/User");
+const User = require("../models/User");
 const auth = require("../middleware/auth");
 
 // * @route   POST api/login
@@ -14,8 +14,8 @@ const auth = require("../middleware/auth");
 router.post(
   "/",
   [
-    body("username", "please enter the username!").exists(),
-    body("password", "please enter the password").exists(),
+    body("username", "please enter the username!").not().isEmpty(),
+    body("password", "please enter the password").not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req);

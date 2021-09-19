@@ -6,7 +6,7 @@ const config = require("config");
 // used to validate response in the server-side
 const { body, validationResult } = require("express-validator");
 
-const User = require("../modules/User");
+const User = require("../models/User");
 
 // * @route   POST api/regiser
 // * @desc    Register a user
