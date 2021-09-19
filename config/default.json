@@ -1,3 +1,4 @@
 {
-  "mongoURI": "mongodb://pooja:database123@database-shard-00-00.nkkqn.mongodb.net:27017,database-shard-00-01.nkkqn.mongodb.net:27017,database-shard-00-02.nkkqn.mongodb.net:27017/contactKeeper?ssl=true&replicaSet=atlas-6n0vg2-shard-0&authSource=admin&retryWrites=true&w=majority"
+  "mongoURI": "mongodb://pooja:database123@database-shard-00-00.nkkqn.mongodb.net:27017,database-shard-00-01.nkkqn.mongodb.net:27017,database-shard-00-02.nkkqn.mongodb.net:27017/contactKeeper?ssl=true&replicaSet=atlas-6n0vg2-shard-0&authSource=admin&retryWrites=true&w=majority",
+  "jwtSecret": "secret"
 }
