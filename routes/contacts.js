@@ -61,6 +61,23 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
+// * @route   GET api/contacts/:id
+// * @desc    Single Contact
+// * @access  Private
+
+router.get("/:id", auth, async (req, res) => {
+  try {
+    let contact = await Contact.findById(req.params.id);
+
+    if (!contact) return res.status(404).json({ message: "Contact not found" });
+
+    res.json(contact);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server Error");
+  }
+});
+
 // * @route   PUT api/contacts
 // * @desc    Update contact
 // * @access  Private
@@ -108,11 +125,6 @@ router.delete("/:id", auth, async (req, res) => {
     let contact = await Contact.findById(req.params.id);
 
     if (!contact) return res.status(404).json({ message: "Contact not found" });
-
-    // Make sure user owns contact
-    // if (contact.user.toSting() !== req.user.userId) {
-    //   return res.status(401).json({message:"Not Authorized"})
-    // }
 
     await Contact.findByIdAndRemove(req.params.id);
 
