@@ -33,9 +33,9 @@ app.get("/", (req, res) => {
 });
 
 // Define Routes
-app.use("/api/register", require("./routes/register.js"));
-app.use("/api/login", require("./routes/login.js"));
-app.use("/api/contacts", require("./routes/contacts.js"));
+app.use("/api/register", require("./middleware/routes/register"));
+app.use("/api/login", require("./middleware/routes/login.js"));
+app.use("/api/contacts", require("./middleware/routes/contacts.js"));
 
 const PORT = process.env.PORT || 5000;
 

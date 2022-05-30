@@ -6,7 +6,7 @@ const config = require("config");
 // used to validate response in the server-side
 const { body, validationResult } = require("express-validator");
 const User = require("../models/User");
-const auth = require("../middleware/auth");
+const auth = require("../authentication/auth");
 
 // * @route   POST api/login
 // * @desc    Auth user and get token
@@ -14,7 +14,7 @@ const auth = require("../middleware/auth");
 router.post(
   "/",
   [
-    body("username", "please enter the username!").not().isEmpty(),
+    body("email", "please enter the email!").not().isEmpty(),
     body("password", "please enter the password").not().isEmpty(),
   ],
   async (req, res) => {
@@ -22,9 +22,9 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const { username, password } = req.body;
+    const { email, password } = req.body;
     try {
-      let user = await User.findOne({ username });
+      let user = await User.findOne({ email });
       if (!user) {
         return res.status(400).json({ message: "Invalid Credentials" });
       }

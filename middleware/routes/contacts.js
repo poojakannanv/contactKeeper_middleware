@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const auth = require("../middleware/auth");
+const auth = require("../authentication/auth");
 // used to validate response in the server-side
 const { body, validationResult } = require("express-validator");
 const Contact = require("../models/Contact");
@@ -27,7 +27,13 @@ router.post(
     const { name, email, phone, type } = req.body;
 
     try {
-      const newContact = new Contact({
+      let contact = await Contact.findOne({ phone });
+
+      if (contact) {
+        return res.status(400).json({ message: "Phone Number already exists" });
+      }
+
+      contact = new Contact({
         name,
         email,
         phone,
@@ -35,8 +41,8 @@ router.post(
         user: req.user.userId,
       });
 
-      const contact = await newContact.save();
-      res.json(contact);
+      const Newcontact = await contact.save();
+      res.json(Newcontact);
     } catch (error) {
       console.error(error.message);
       res.status(500).send("Server Error");
